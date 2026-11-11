@@ -1,0 +1,17 @@
+Site Captl'instant : mettre le site en ligne (Cloudflare Pages + ton domaine Gandi)
+
+1. Va sur dash.cloudflare.com (le même compte que RARE Club).
+2. Menu « Workers & Pages » → « Créer » → onglet « Pages » → « Importer des fichiers » (upload direct).
+3. Donne un nom au projet (par exemple captlinstant), puis glisse ce dossier entier
+   (celui qui contient index.html). Clique sur « Déployer ».
+   → Ton site est en ligne sur une adresse en .pages.dev.
+4. Ton nom de domaine (acheté chez Gandi) :
+   a. Sur Cloudflare : « Ajouter un domaine », tape ton domaine, choisis l'offre gratuite.
+      Cloudflare te donne 2 « serveurs de noms ».
+   b. Sur Gandi : ton domaine → « Serveurs de noms » → « Externes » → colle les 2 serveurs de Cloudflare.
+      (Ça peut prendre de quelques minutes à 24 h.)
+   c. Retour sur ton projet Pages → « Domaines personnalisés » → ajoute ton domaine.
+5. Pour une mise à jour : projet Pages → « Créer un déploiement » → glisse le nouveau dossier.
+
+Avant de vendre : remplace le lien de paiement (Claude le fait pour toi) et complète
+les infos entre crochets dans les pages légales (SIRET, adresse).

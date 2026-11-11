@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maison Bun · burgers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+  :root{--bg:#0E0C0C;--bg2:#17130F;--ink:#F6EDE2;--dim:#B5A595;--line:#2C2420;--acc:#E4572E;--mus:#F2B33D;--d:"Anton",Impact,sans-serif;--b:"DM Sans",system-ui,sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--b);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .w{max-width:1160px;margin:0 auto;padding:0 28px}
+  h1,h2,h3,.logo{font-family:var(--d);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:1.02}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--acc);color:#fff;font-weight:700;padding:14px 24px;border-radius:99px;transition:transform .2s ease}
+  .btn:hover{transform:translateY(-2px) rotate(-1deg)}
+  .btn.o{background:none;color:var(--ink);border:2px solid var(--ink)}
+  nav{position:fixed;inset:0 0 auto;z-index:10;transition:background .3s ease}
+  nav.s{background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--line)}
+  nav .w{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+  .logo{font-size:28px;display:flex;align-items:center;gap:8px}
+  .logo i{width:26px;height:26px;border-radius:50% 50% 8px 8px;background:var(--mus);box-shadow:inset 0 -7px 0 #C98A2A;display:inline-block}
+  .nl{display:flex;gap:28px;font-weight:500;font-size:15px}
+  .nl a:hover{color:var(--acc)}
+
+  /* ---------- l'assemblage ---------- */
+  .build{height:420vh;position:relative}
+  .stage{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:24px;padding:72px 28px 0;max-width:1160px;margin:0 auto}
+  .steps{position:relative;height:340px}
+  .step{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:16px;opacity:0;transform:translateY(24px);transition:opacity .45s ease,transform .45s ease}
+  .step.on{opacity:1;transform:none}
+  .step .k{font:700 13px var(--b);letter-spacing:.18em;text-transform:uppercase;color:var(--acc)}
+  .step h1{font-size:clamp(56px,8.4vw,120px)}
+  .step h2{font-size:clamp(44px,6vw,84px)}
+  .step p{font-size:19px;color:var(--dim);max-width:34ch}
+  .step .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .meter{position:absolute;left:28px;bottom:40px;display:flex;align-items:center;gap:14px;font:700 13px var(--b);letter-spacing:.12em}
+  .meter b{display:block;width:180px;height:4px;background:var(--line);border-radius:4px;overflow:hidden}
+  .meter b i{display:block;height:100%;width:0;background:var(--acc)}
+  .scene{position:relative;height:min(78vh,560px);display:grid;place-items:center}
+  .scene svg{width:min(100%,520px);height:100%;overflow:visible}
+  .bv{position:absolute;inset:0;margin:auto;height:100%;width:auto;max-width:100%;object-fit:contain;opacity:0;transition:opacity .4s ease;-webkit-mask-image:radial-gradient(ellipse 60% 62% at 50% 50%,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse 60% 62% at 50% 50%,#000 62%,transparent 100%)}
+  .scene.vid .bv{opacity:1}.scene.vid svg,.scene.vid .halo{display:none}
+  .halo{position:absolute;width:min(80%,440px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,var(--mus) 0%,transparent 68%);opacity:.45}
+  .layer{will-change:transform,opacity}
+  .tag{position:absolute;font:700 12px var(--b);letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--bg);padding:6px 10px;border-radius:99px;opacity:0;transition:opacity .3s ease}
+  .tag.on{opacity:1}
+
+  /* ---------- carte ---------- */
+  section{padding:110px 0}
+  .head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:44px}
+  .head h2{font-size:clamp(52px,8vw,110px)}
+  .head p{max-width:36ch;color:var(--dim)}
+  .menu{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .card{background:var(--bg2);border-radius:22px;padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);transition:transform .25s ease,box-shadow .25s ease}
+  .card:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:0 22px 40px -24px rgba(60,30,10,.45)}
+  .card svg{width:100%;height:130px}
+  .cimg{height:150px;border-radius:14px;overflow:hidden}.cimg svg{height:150px}
+  .card h3{font-size:30px}
+  .card p{font-size:14px;color:var(--dim);flex:1}
+  .card .pr{display:flex;justify-content:space-between;align-items:center;font-weight:700}
+  .card .pr span{font:400 28px var(--d);color:var(--acc)}
+  .sides{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
+  .sides span{border:2px dashed var(--line);border-radius:99px;padding:8px 16px;font-weight:500;font-size:14px}
+  .sides b{color:var(--acc);margin-left:6px}
+
+  .band{background:var(--acc);color:#fff;overflow:hidden;padding:22px 0}
+  .band div{display:flex;gap:40px;white-space:nowrap;font:400 44px var(--d);text-transform:uppercase;animation:roll 22s linear infinite;width:max-content}
+  .band span::after{content:"✺";margin-left:40px;color:var(--mus)}
+  @keyframes roll{to{transform:translateX(-50%)}}
+
+  .info{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
+  .info h2{font-size:clamp(48px,7vw,96px);margin-bottom:22px}
+  .hrs{display:grid;grid-template-columns:auto 1fr;gap:10px 28px;font-size:17px}
+  .hrs span:nth-child(odd){color:var(--dim)}
+  .box{background:#1C1612;color:var(--ink);border:1px solid var(--line);border-radius:26px;padding:32px;display:grid;gap:14px}
+  .box h3{font-size:40px}
+  .box p{color:var(--dim)}
+  .box .btn{justify-content:center}
+  footer{border-top:1px solid var(--line);padding:30px 0;font-size:14px;color:var(--dim)}
+  footer .w{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  @media (max-width:900px){.menu{grid-template-columns:1fr 1fr}.info{grid-template-columns:1fr}}
+  @media (max-width:720px){
+    .nl{display:none}.w{padding:0 20px}
+    .stage{grid-template-columns:1fr;grid-template-rows:auto 1fr;padding:84px 20px 0;gap:0}
+    .steps{height:220px}.step h1{font-size:54px}.step h2{font-size:44px}.step p{font-size:16px}
+    .scene{height:auto;min-height:0}.scene svg{height:46vh}.scene.vid{height:52vh}
+    .meter{left:20px;bottom:22px}.meter b{width:120px}
+    section{padding:80px 0}.menu{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){.band div{animation:none}.step{transition:none}}
+</style>
+</head>
+<body>
+<nav id="nav"><div class="w">
+  <a class="logo" href="#top"><span data-logo style="display:flex;align-items:center;gap:8px"><i aria-hidden="true"></i><span data-nom>Maison Bun</span></span></a>
+  <div class="nl"><a href="#build" data-en="The burger">Le burger</a><a href="#carte" data-en="Menu">La carte</a><a href="#infos" data-en="Visit us">Infos</a></div>
+  <a class="btn" href="#infos" data-en="Order">Commander</a>
+</div></nav>
+
+<div class="build" id="build">
+  <div class="stage" id="top">
+    <div class="steps">
+      <div class="step on" data-i="0"><span class="k" data-en="Burgers · Bordeaux">Burgers · Bordeaux</span><h1 data-acc data-en="Built<br>layer by layer.">Construit<br>étage par étage.</h1><p data-en="Scroll down: your burger comes together right before your eyes.">Fais défiler : ton burger se monte sous tes yeux.</p></div>
+      <div class="step" data-i="1"><span class="k">01</span><h2 data-en="The bun">Le pain</h2><p data-en="Brioche, baked the same morning, toasted in butter.">Brioché, cuit le matin même, toasté au beurre.</p></div>
+      <div class="step" data-i="2"><span class="k">02</span><h2 data-en="The beef">La viande</h2><p data-en="Freshly ground beef, seared hard on the griddle.">Bœuf haché minute, saisi fort sur la plancha.</p></div>
+      <div class="step" data-i="3"><span class="k">03</span><h2 data-en="The cheese">Le fromage</h2><p data-en="Aged cheddar, melted just enough.">Cheddar affiné, fondu juste ce qu'il faut.</p></div>
+      <div class="step" data-i="4"><span class="k">04</span><h2 data-en="The fresh stuff">Le frais</h2><p data-en="Crunchy lettuce, seasonal tomatoes, pickled red onions.">Salade croquante, tomates de saison, oignons rouges marinés.</p></div>
+      <div class="step" data-i="5"><span class="k">05</span><h2 data-en="And we close it.">Et on referme.</h2><p data-en="Ready in 8 minutes. Eat in or take away.">Prêt en 8 minutes. Sur place ou à emporter.</p><div class="row"><a class="btn" href="#carte" data-en="See the menu">Voir la carte</a></div></div>
+    </div>
+    <div class="scene" id="scene">
+      <video class="bv" id="bv" src="burger-assemble.mp4" poster="burger-assemble.jpg" muted playsinline preload="auto" aria-label="Un burger qui s'assemble"></video>
+      <div class="halo" aria-hidden="true"></div>
+      <svg viewBox="0 0 400 440" role="img" aria-label="Un burger qui s'assemble" id="burger">
+        <defs>
+          <linearGradient id="bunT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9A443"/><stop offset=".7" stop-color="#C77A26"/><stop offset="1" stop-color="#A9601B"/></linearGradient>
+          <linearGradient id="bunB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3D29A"/><stop offset=".25" stop-color="#D9923B"/><stop offset="1" stop-color="#A9601B"/></linearGradient>
+          <linearGradient id="meat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6E3A20"/><stop offset="1" stop-color="#3C1E10"/></linearGradient>
+          <radialGradient id="shadow"><stop offset="0" stop-color="#5A3A1F" stop-opacity=".35"/><stop offset="1" stop-color="#5A3A1F" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="200" cy="412" rx="170" ry="16" fill="url(#shadow)"/>
+        <!-- 1 pain du bas -->
+        <g class="layer" data-s="1"><path d="M48 360 H352 Q364 360 361 374 Q352 404 300 406 H100 Q48 404 39 374 Q36 360 48 360Z" fill="url(#bunB)"/></g>
+        <!-- 2 steak -->
+        <g class="layer" data-s="2">
+          <path d="M44 330 Q40 316 60 314 H340 Q360 316 356 330 L358 346 Q356 364 336 364 H64 Q44 364 42 346Z" fill="url(#meat)"/>
+          <path d="M70 324 Q120 318 170 324 M210 322 Q270 316 330 324 M80 348 Q140 342 200 350 M230 348 Q280 344 320 350" stroke="#8C4D2A" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+          <g fill="#2A140A" opacity=".5"><circle cx="100" cy="338" r="2.4"/><circle cx="150" cy="332" r="2"/><circle cx="190" cy="340" r="2.6"/><circle cx="245" cy="334" r="2"/><circle cx="290" cy="341" r="2.4"/><circle cx="320" cy="333" r="2"/></g>
+        </g>
+        <!-- 3 cheddar -->
+        <g class="layer" data-s="3"><path d="M38 306 H362 L366 316 L336 318 L326 344 L314 318 L262 318 L254 336 L244 318 L170 318 L160 350 L148 318 L94 318 L86 334 L78 318 L34 316Z" fill="#F4B521"/><path d="M38 306 H362 L364 310 H36Z" fill="#FFD25E"/></g>
+        <!-- 4 salade + tomate + oignon -->
+        <g class="layer" data-s="4">
+          <path d="M30 296 Q50 282 70 296 Q90 282 110 296 Q130 282 150 296 Q170 282 190 296 Q210 282 230 296 Q250 282 270 296 Q290 282 310 296 Q330 282 350 296 Q370 284 372 300 Q340 312 300 304 Q260 314 220 304 Q180 314 140 304 Q100 314 60 304 Q30 312 28 300Z" fill="#6DB33F"/>
+          <path d="M40 294 Q60 284 80 294 Q100 284 120 294 Q140 284 160 294 Q180 284 200 294 Q220 284 240 294 Q260 284 280 294 Q300 284 320 294 Q340 284 360 294" stroke="#A6DB6A" stroke-width="3" fill="none"/>
+          <rect x="62" y="270" width="132" height="20" rx="10" fill="#E2412A"/><rect x="206" y="270" width="132" height="20" rx="10" fill="#E2412A"/>
+          <g fill="#FBD7A8"><ellipse cx="96" cy="280" rx="6" ry="3"/><ellipse cx="128" cy="280" rx="6" ry="3"/><ellipse cx="160" cy="280" rx="6" ry="3"/><ellipse cx="240" cy="280" rx="6" ry="3"/><ellipse cx="272" cy="280" rx="6" ry="3"/><ellipse cx="304" cy="280" rx="6" ry="3"/></g>
+          <path d="M90 266 Q130 254 170 266 M230 266 Q270 254 310 266" stroke="#9B3D8A" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M100 266 Q130 258 160 266 M240 266 Q270 258 300 266" stroke="#F1D6EC" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- 5 pain du haut -->
+        <g class="layer" data-s="5">
+          <path d="M40 262 Q34 150 200 140 Q366 150 360 262 Q360 270 350 270 H50 Q40 270 40 262Z" fill="url(#bunT)"/>
+          <path d="M70 190 Q120 152 200 150" stroke="#F6C878" stroke-width="10" fill="none" stroke-linecap="round" opacity=".55"/>
+          <g fill="#FFF3D6"><ellipse cx="140" cy="180" rx="7" ry="3.6" transform="rotate(-20 140 180)"/><ellipse cx="190" cy="166" rx="7" ry="3.6" transform="rotate(10 190 166)"/><ellipse cx="240" cy="176" rx="7" ry="3.6" transform="rotate(25 240 176)"/><ellipse cx="110" cy="214" rx="7" ry="3.6" transform="rotate(-35 110 214)"/><ellipse cx="170" cy="204" rx="7" ry="3.6"/><ellipse cx="226" cy="210" rx="7" ry="3.6" transform="rotate(15 226 210)"/><ellipse cx="286" cy="200" rx="7" ry="3.6" transform="rotate(30 286 200)"/><ellipse cx="300" cy="236" rx="7" ry="3.6" transform="rotate(40 300 236)"/><ellipse cx="140" cy="244" rx="7" ry="3.6" transform="rotate(-15 140 244)"/><ellipse cx="208" cy="240" rx="7" ry="3.6" transform="rotate(5 208 240)"/></g>
+        </g>
+      </svg>
+    </div>
+    <div class="meter" aria-hidden="true"><span id="cnt">00 / 05</span><b><i id="bar"></i></b></div>
+  </div>
+</div>
+
+<div class="band" aria-hidden="true"><div><span data-en="Bun">Pain</span><span data-en="Beef">Bœuf</span><span>Cheddar</span><span data-en="Lettuce">Salade</span><span data-en="Tomato">Tomate</span><span data-en="Onion">Oignon</span><span data-en="Bun">Pain</span><span data-en="Beef">Bœuf</span><span>Cheddar</span><span data-en="Lettuce">Salade</span><span data-en="Tomato">Tomate</span><span data-en="Onion">Oignon</span></div></div>
+
+<section id="carte"><div class="w">
+  <div class="head"><h2 data-en="The menu">La carte</h2><p data-en="Four burgers, no more. All served with homemade fries.">Quatre burgers, pas un de plus. Tous servis avec des frites maison.</p></div>
+  <div class="menu">
+    <article class="card"><div class="cimg" data-slot="0"><svg viewBox="0 0 200 130" aria-hidden="true"><use href="#mini"/></svg></div><h3 data-en="The Classic">Le Classique</h3><p data-en="Beef, cheddar, lettuce, tomato, house sauce.">Bœuf, cheddar, salade, tomate, sauce maison.</p><div class="pr"><small data-en="With fries">Avec frites</small><span data-en="€12">12 €</span></div></article>
+    <article class="card"><div class="cimg" data-slot="1"><svg viewBox="0 0 200 130" aria-hidden="true" style="--cheese:#C8641E"><use href="#mini"/></svg></div><h3 data-en="The Smoky">Le Fumé</h3><p data-en="Beef, crispy bacon, smoked cheese, barbecue sauce.">Bœuf, bacon croustillant, fromage fumé, sauce barbecue.</p><div class="pr"><small data-en="With fries">Avec frites</small><span data-en="€14">14 €</span></div></article>
+    <article class="card"><div class="cimg" data-slot="2"><svg viewBox="0 0 200 130" aria-hidden="true" style="--meat:#5E8C3A"><use href="#mini"/></svg></div><h3 data-en="The Green">Le Vert</h3><p data-en="Vegetable patty, goat cheese, rocket, pesto.">Galette de légumes, chèvre, roquette, pesto.</p><div class="pr"><small data-en="With fries">Avec frites</small><span data-en="€13">13 €</span></div></article>
+    <article class="card"><div class="cimg" data-slot="3"><svg viewBox="0 0 200 130" aria-hidden="true"><use href="#mini2"/></svg></div><h3 data-en="The Double">Le Double</h3><p data-en="Two patties, double cheddar, pickled onions.">Deux steaks, double cheddar, oignons marinés.</p><div class="pr"><small data-en="With fries">Avec frites</small><span data-en="€16">16 €</span></div></article>
+  </div>
+  <div class="sides"><span data-en="Homemade fries <b>€4</b>">Frites maison <b>4 €</b></span><span data-en="Coleslaw <b>€4</b>">Coleslaw <b>4 €</b></span><span data-en="Lemonade <b>€4.5</b>">Citronnade <b>4,50 €</b></span><span data-en="Brownie <b>€5</b>">Brownie <b>5 €</b></span></div>
+</div></section>
+
+<section id="infos" style="background:var(--bg2)"><div class="w info">
+  <div><h2 data-en="Come<br>hungry.">Viens<br>avec la faim.</h2>
+    <div class="hrs"><span data-en="Tue – Sat">Mar – sam</span><span data-en="12 – 2:30 pm · 7 – 10:30 pm">12 h – 14 h 30 · 19 h – 22 h 30</span><span data-en="Sunday">Dimanche</span><span data-en="12 – 3 pm">12 h – 15 h</span><span data-en="Monday">Lundi</span><span data-en="Closed">Fermé</span></div>
+    <p style="margin-top:22px;color:var(--dim)" data-en="8 Example Street, Bordeaux">8 rue de l'Exemple, Bordeaux</p></div>
+  <div class="box"><h3 data-en="Order or book">Commander ou réserver</h3><p data-en="Takeaway ready in 15 minutes. Tables for 2 to 8 people.">À emporter prêt en 15 minutes. Tables de 2 à 8 personnes.</p><a class="btn" href="#infos" data-en="Order now">Commander</a><a class="btn o" style="border-color:var(--ink);color:var(--ink)" href="#infos" data-en="Book a table">Réserver une table</a></div>
+</div></section>
+<footer><div class="w"><span>© <span data-nom>Maison Bun</span></span><span data-en="Legal notice · Privacy">Mentions légales · Confidentialité</span></div></footer>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mini" viewBox="0 0 200 130"><path d="M40 100 H160 Q168 100 164 110 Q158 122 130 122 H70 Q42 122 36 110 Q32 100 40 100Z" fill="#D9923B"/><rect x="32" y="82" width="136" height="20" rx="9" fill="var(--meat,#5A2E1B)"/><path d="M30 76 H170 L172 84 L150 86 L144 98 L136 86 L80 86 L72 96 L64 86 L28 84Z" fill="var(--cheese,#F4B521)"/><path d="M26 74 Q40 64 54 74 Q68 64 82 74 Q96 64 110 74 Q124 64 138 74 Q152 64 166 74 Q178 66 176 78 H24 Q22 66 26 74Z" fill="#6DB33F"/><path d="M30 70 Q28 18 100 14 Q172 18 170 70Z" fill="#D88A33"/><g fill="#FFF3D6"><ellipse cx="80" cy="34" rx="4" ry="2"/><ellipse cx="104" cy="28" rx="4" ry="2"/><ellipse cx="128" cy="38" rx="4" ry="2"/><ellipse cx="94" cy="50" rx="4" ry="2"/><ellipse cx="120" cy="54" rx="4" ry="2"/></g></symbol>
+  <symbol id="mini2" viewBox="0 0 200 130"><path d="M40 108 H160 Q168 108 164 116 Q158 126 130 126 H70 Q42 126 36 116 Q32 108 40 108Z" fill="#D9923B"/><rect x="32" y="92" width="136" height="17" rx="8" fill="#5A2E1B"/><path d="M30 86 H170 L172 93 L150 95 L144 104 L136 95 L28 93Z" fill="#F4B521"/><rect x="32" y="70" width="136" height="17" rx="8" fill="#5A2E1B"/><path d="M30 64 H170 L172 71 L120 73 L112 82 L104 73 L28 71Z" fill="#F4B521"/><path d="M30 62 Q28 14 100 10 Q172 14 170 62Z" fill="#D88A33"/><path d="M58 60 Q80 52 100 60 Q120 52 142 60" stroke="#9B3D8A" stroke-width="5" fill="none"/><g fill="#FFF3D6"><ellipse cx="80" cy="30" rx="4" ry="2"/><ellipse cx="104" cy="24" rx="4" ry="2"/><ellipse cx="128" cy="34" rx="4" ry="2"/></g></symbol>
+</svg>
+
+<script>
+(function(){
+  // textes, nom, accroche et couleur passés par le configurateur (#n=...&a=...&c=...&l=en)
+  function apply(){ var P=new URLSearchParams(location.hash.slice(1)), en=P.get('l')==='en';
+    document.documentElement.lang=en?'en':'fr';
+    document.querySelectorAll('[data-en]').forEach(function(e){ if(e.dataset.fr===undefined) e.dataset.fr=e.innerHTML; e.innerHTML=en?e.dataset.en:e.dataset.fr; });
+    var n=P.get('n'); document.querySelectorAll('[data-nom]').forEach(function(e){ if(e.dataset.n0===undefined) e.dataset.n0=e.textContent; e.textContent=n||e.dataset.n0; });
+    var a=P.get('a'); if(a) document.querySelectorAll('[data-acc]').forEach(function(e){ e.textContent=a; });
+    var c=P.get('c'); if(c) document.documentElement.style.setProperty('--acc',c); else document.documentElement.style.removeProperty('--acc');
+    if(n) document.title=n; }
+  window.addEventListener('hashchange',apply); apply();
+  document.addEventListener('click',function(e){ var l=e.target.closest('a[href^="#"]'); if(!l) return; var t=document.querySelector(l.getAttribute('href')); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); } });
+
+  var nav=document.getElementById('nav'), build=document.getElementById('build'), steps=[].slice.call(document.querySelectorAll('.step')),
+      layers=[].slice.call(document.querySelectorAll('.layer')), cnt=document.getElementById('cnt'), bar=document.getElementById('bar'),
+      reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, N=5, last=-1;
+  function ease(x){ return 1-Math.pow(1-x,3); }
+  var bv=document.getElementById('bv'), scene=document.getElementById('scene'), vOK=false, lastT=-1;
+  bv.addEventListener('loadeddata',function(){ vOK=true; scene.classList.add('vid'); frame(); });
+  if(bv.readyState>=2){ vOK=true; scene.classList.add('vid'); }
+  bv.addEventListener('error',function(){ vOK=false; scene.classList.remove('vid'); });
+  // iOS : un premier contact autorise la vidéo à se positionner
+  addEventListener('touchstart',function once(){ bv.play().then(function(){ bv.pause(); frame(); }).catch(function(){}); removeEventListener('touchstart',once); },{passive:true});
+  function frame(){
+    nav.classList.toggle('s',scrollY>20);
+    var r=build.getBoundingClientRect(), p=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
+    // chaque étage tombe pendant sa part du défilement
+    layers.forEach(function(g){ var s=+g.dataset.s, a=(s-1)/N*0.92+0.04, b=a+0.12, k=reduce?1:Math.min(1,Math.max(0,(p-a)/(b-a))), e=ease(k);
+      var y=(1-e)*-520, rot=(1-e)*(s%2?-14:12), bounce=k>=1?0:Math.sin(e*Math.PI)*-6;
+      g.style.transform='translate(0px,'+(y+bounce)+'px) rotate('+rot+'deg)'; g.style.transformOrigin='200px 300px'; g.style.opacity=k>0?Math.min(1,k*3):0; });
+    if(vOK&&bv.duration){ var tv=(reduce?1:Math.min(1,Math.max(0,(p-.03)/.9)))*(bv.duration-0.05); if(Math.abs(tv-lastT)>1/40){ bv.currentTime=tv; lastT=tv; } }
+    var i=reduce?N:layers.filter(function(g){ return p>=(+g.dataset.s-1)/N*0.92+0.04; }).length;
+    if(i!==last){ steps.forEach(function(s){ s.classList.toggle('on',+s.dataset.i===i); }); last=i; }
+    cnt.textContent=String(Math.min(i,N)).padStart(2,'0')+' / 0'+N; bar.style.width=(p*100)+'%';
+  }
+  var tick=false; addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(function(){ frame(); tick=false; }); } },{passive:true});
+  addEventListener('resize',frame); frame();
+})();
+</script>
+<script>
+// photos et logo envoyés par le configurateur du Kit Site Web
+window.addEventListener('message',function(e){ var d=e.data; if(e.source!==window.parent||!d||d.kit!=='photos') return;
+  document.querySelectorAll('[data-slot]').forEach(function(el){ if(el.dataset.orig===undefined) el.dataset.orig=el.innerHTML;
+    var i=+el.dataset.slot, u=d.photos&&d.photos.length?d.photos[i%d.photos.length]:null;
+    el.innerHTML=u?'<img src="'+u+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit">':el.dataset.orig; el.classList.toggle('has-photo',!!u); });
+  document.querySelectorAll('[data-logo]').forEach(function(el){ if(el.dataset.orig===undefined) el.dataset.orig=el.innerHTML;
+    el.innerHTML=d.logo?'<img src="'+d.logo+'" alt="" style="height:36px;width:auto;display:block">':el.dataset.orig; });
+});
+</script>
+</body>
+</html>
