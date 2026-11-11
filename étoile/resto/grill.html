@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La Braise · grill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+  :root{--bg:#0C0B0A;--bg2:#161311;--ink:#F3ECE3;--dim:#A39788;--line:#2B2521;--acc:#E8A33B;--fire:#E2531E;--d:"Oswald",Impact,sans-serif;--b:"Inter",system-ui,sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--b);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .w{max-width:1200px;margin:0 auto;padding:0 30px}
+  h1,h2,h3{font-family:var(--d);font-weight:600;text-transform:uppercase;line-height:.98;letter-spacing:.005em}
+  .k{font:600 12px var(--b);letter-spacing:.22em;text-transform:uppercase;color:var(--acc)}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--acc);color:#140C04;font:600 15px var(--d);letter-spacing:.08em;text-transform:uppercase;padding:14px 26px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);transition:filter .2s ease}
+  .btn:hover{filter:brightness(1.12)}
+  .btn.o{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line);clip-path:none}
+  nav{position:fixed;inset:0 0 auto;z-index:10;transition:background .3s ease}
+  nav.s{background:rgba(12,11,10,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .w{display:flex;justify-content:space-between;align-items:center;height:74px}
+  .logo{font:700 26px var(--d);letter-spacing:.06em;text-transform:uppercase;display:flex;gap:10px;align-items:center}
+  .logo svg{width:20px;height:26px}
+  .nl{display:flex;gap:30px;font:500 14px var(--d);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  .nl a:hover{color:var(--acc)}
+
+  /* ---------- feu ---------- */
+  .hero{position:relative;min-height:100vh;display:grid;align-items:end;overflow:hidden;padding:120px 0 80px}
+  #embers{position:absolute;inset:0;width:100%;height:100%}
+  .glow{position:absolute;left:50%;bottom:-30vh;width:120vw;height:70vh;transform:translateX(-50%);background:radial-gradient(ellipse at 50% 100%,rgba(226,83,30,.55),rgba(232,163,59,.18) 40%,transparent 70%);animation:breathe 4s ease-in-out infinite}
+  @keyframes breathe{50%{opacity:.75}}
+  .grate{position:absolute;right:4%;top:50%;transform:translateY(-50%);width:min(46vw,600px)}
+  .hero .w{position:relative;width:100%}
+  .hero h1{font-size:clamp(68px,12vw,190px);max-width:9ch}
+  .hero h1 span{display:block;color:transparent;-webkit-text-stroke:2px var(--acc)}
+  .hero p{color:var(--dim);max-width:40ch;margin:22px 0 30px;font-size:18px}
+  .stats{display:flex;gap:34px;margin-top:40px;flex-wrap:wrap}
+  .stats div{font-size:13px;color:var(--dim);letter-spacing:.06em}
+  .stats b{display:block;font:600 34px var(--d);color:var(--ink)}
+
+  section{padding:120px 0;border-top:1px solid var(--line)}
+  .sh{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:48px}
+  .sh h2{font-size:clamp(48px,7vw,104px)}
+  .sh p{color:var(--dim);max-width:36ch}
+
+  /* ---------- pièces ---------- */
+  .cuts{display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:center}
+  .tabs{display:grid;gap:4px}
+  .tabs button{all:unset;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border:1px solid var(--line);font:600 20px var(--d);letter-spacing:.06em;text-transform:uppercase;color:var(--dim);transition:all .2s ease}
+  .tabs button small{font:500 12px var(--b);letter-spacing:.08em;color:var(--dim)}
+  .tabs button[aria-selected=true]{color:#140C04;background:var(--acc);border-color:var(--acc)}
+  .tabs button[aria-selected=true] small{color:#140C04}
+  .tabs button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+  .cut{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;background:var(--bg2);border:1px solid var(--line);padding:30px}
+  .cut svg{width:100%;height:auto;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+  .cut h3{font-size:46px}
+  .cut p{color:var(--dim);margin:10px 0 20px}
+  .spec{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;font-size:14px;border-top:1px solid var(--line);padding-top:16px}
+  .spec span:nth-child(odd){color:var(--dim)}
+  .price{font:600 54px var(--d);color:var(--acc);margin-top:16px}
+
+  /* ---------- cuisson ---------- */
+  .done{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .slice{width:100%;max-width:520px}
+  .range{margin-top:26px}
+  .range input{width:100%;accent-color:var(--acc)}
+  .marks{display:flex;justify-content:space-between;font:500 12px var(--d);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-top:8px}
+  .marks b{color:var(--acc)}
+  .temp{font:600 clamp(70px,10vw,140px) var(--d);line-height:1}
+  .temp small{font-size:.35em;color:var(--dim)}
+
+  /* ---------- cave ---------- */
+  .wine{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .wine div{border:1px solid var(--line);padding:24px;display:grid;gap:6px}
+  .wine b{font:600 22px var(--d);letter-spacing:.04em;text-transform:uppercase}
+  .wine span{color:var(--dim);font-size:14px}
+  .wine i{font:600 22px var(--d);font-style:normal;color:var(--acc);margin-top:8px}
+  .end{text-align:center;padding:140px 0;position:relative;overflow:hidden}
+  .end h2{font-size:clamp(56px,9vw,140px);margin-bottom:28px}
+  footer{border-top:1px solid var(--line);padding:30px 0;font-size:13px;color:var(--dim)}
+  footer .w{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  @media (max-width:900px){.cuts,.done,.cut{grid-template-columns:1fr}.wine{grid-template-columns:1fr}.grate{opacity:.35;width:90vw;right:-20vw}}
+  @media (max-width:720px){.nl{display:none}.w{padding:0 20px}section{padding:84px 0}.tabs{grid-template-columns:1fr 1fr}.tabs button{font-size:16px;padding:14px}}
+  @media (prefers-reduced-motion:reduce){.glow{animation:none}}
+</style>
+</head>
+<body>
+<nav id="nav"><div class="w">
+  <a class="logo" href="#top"><span data-logo style="display:flex;gap:10px;align-items:center"><svg viewBox="0 0 20 26" aria-hidden="true"><path d="M10 0 C14 7 20 10 18 18 C17 23 13 26 10 26 C6 26 2 23 2 18 C2 13 6 12 7 6 C9 9 9 11 10 12 C11 8 11 4 10 0Z" fill="var(--fire)"/><path d="M10 12 C12 16 15 17 14 21 C13 24 7 24 6 21 C5 18 8 17 10 12Z" fill="var(--acc)"/></svg><span data-nom>La Braise</span></span></a>
+  <div class="nl"><a href="#pieces" data-en="Cuts">Les pièces</a><a href="#cuisson" data-en="Doneness">La cuisson</a><a href="#cave" data-en="Wine">La cave</a></div>
+  <a class="btn" href="#resa" data-en="Book">Réserver</a>
+</div></nav>
+
+<header class="hero" id="top">
+  <canvas id="embers" aria-hidden="true"></canvas>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="grate" data-slot="0" style="border-radius:6px;overflow:hidden;aspect-ratio:600/420"><svg viewBox="0 0 600 420" aria-hidden="true" style="width:100%;height:100%">
+    <defs><linearGradient id="meatG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8A3B22"/><stop offset=".55" stop-color="#5B2214"/><stop offset="1" stop-color="#2C100A"/></linearGradient>
+      <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A403A"/><stop offset="1" stop-color="#1B1714"/></linearGradient></defs>
+    <path d="M110 150 C150 70 330 60 450 100 C540 130 560 230 500 290 C440 350 260 360 170 320 C90 285 70 220 110 150Z" fill="url(#meatG)"/>
+    <path d="M150 170 C200 120 330 110 430 140" stroke="#F3ECE3" stroke-width="10" fill="none" opacity=".5" stroke-linecap="round"/>
+    <path d="M170 240 C240 200 360 200 470 230" stroke="#F3ECE3" stroke-width="6" fill="none" opacity=".35" stroke-linecap="round"/>
+    <g stroke="#1A0B06" stroke-width="12" stroke-linecap="round" opacity=".8"><path d="M170 130 L250 330"/><path d="M250 100 L330 340"/><path d="M330 90 L410 335"/><path d="M410 105 L480 300"/></g>
+    <g fill="url(#bar)"><rect x="20" y="360" width="560" height="10" rx="5"/><rect x="20" y="390" width="560" height="10" rx="5"/></g>
+    <g fill="#E2531E" opacity=".9"><circle cx="120" cy="408" r="4"/><circle cx="300" cy="412" r="3"/><circle cx="460" cy="406" r="4"/></g>
+  </svg></div>
+  <div class="w">
+    <span class="k" data-en="Wood-fire grill · Bordeaux">Grill au feu de bois · Bordeaux</span>
+    <h1 data-acc data-en="Fire<span>does the rest.</span>">Le feu<span>fait le reste.</span></h1>
+    <p data-en="Hand-picked cuts, vine-wood embers, and nothing in the way of the taste.">Des pièces choisies à la main, des braises de sarments, et rien entre vous et le goût.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="#resa" data-en="Book a table">Réserver une table</a><a class="btn o" href="#pieces" data-en="See the cuts">Voir les pièces</a></div>
+    <div class="stats"><div><b>4</b><span data-en="cuts on the board">pièces à l'ardoise</span></div><div><b>30 j</b><span data-en="dry aged minimum">de maturation minimum</span></div><div><b>1</b><span data-en="wood fire, lit at noon">feu de bois, allumé à midi</span></div></div>
+  </div>
+</header>
+
+<section id="pieces"><div class="w">
+  <div class="sh"><h2 data-en="Pick your cut">Choisis ta pièce</h2><p data-en="Weighed in front of you, cooked to your liking, served with fries and homemade sauce.">Pesée devant toi, cuite comme tu l'aimes, servie avec frites et sauce maison.</p></div>
+  <div class="cuts">
+    <div class="tabs" role="tablist" aria-label="Pièces">
+      <button role="tab" aria-selected="true" data-c="0"><span data-en="Rib-eye">Entrecôte</span><small>300 g</small></button>
+      <button role="tab" aria-selected="false" data-c="1"><span data-en="Sirloin">Faux-filet</span><small>280 g</small></button>
+      <button role="tab" aria-selected="false" data-c="2"><span data-en="Prime rib">Côte de bœuf</span><small>1 kg</small></button>
+      <button role="tab" aria-selected="false" data-c="3"><span data-en="Flank">Bavette</span><small>250 g</small></button>
+    </div>
+    <div class="cut" role="tabpanel">
+      <svg viewBox="0 0 400 300" id="cutSvg" aria-hidden="true"><path id="cutPath" fill="url(#meatG)" d=""/><path id="cutFat" fill="none" stroke="#F3E6D3" stroke-width="9" stroke-linecap="round" opacity=".75" d=""/><path id="cutBone" fill="#EDE2D0" d=""/></svg>
+      <div><span class="k" id="cutK"></span><h3 id="cutN"></h3><p id="cutD"></p>
+        <div class="spec"><span data-en="Origin">Origine</span><span id="cutO"></span><span data-en="Ageing">Maturation</span><span id="cutM"></span></div>
+        <div class="price" id="cutP"></div></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="cuisson"><div class="w done">
+  <svg class="slice" viewBox="0 0 520 260" aria-hidden="true">
+    <rect x="10" y="40" width="500" height="180" rx="40" fill="#3A170D"/>
+    <rect x="22" y="52" width="476" height="156" rx="32" fill="#7A3418"/>
+    <rect id="core" x="40" y="70" width="440" height="120" rx="26" fill="#C2343B"/>
+    <g stroke="#1A0B06" stroke-width="8" stroke-linecap="round" opacity=".7"><path d="M70 40 L110 40 M190 40 L230 40 M310 40 L350 40 M430 40 L470 40"/></g>
+  </svg>
+  <div>
+    <span class="k" data-en="Doneness">La cuisson</span>
+    <div class="temp" id="temp">52<small>°C</small></div>
+    <h2 id="doneN" style="font-size:44px;margin-top:6px"></h2>
+    <p id="doneD" style="color:var(--dim);margin-top:8px;max-width:40ch"></p>
+    <div class="range"><input type="range" min="0" max="4" step="1" value="1" id="dn" aria-label="Cuisson"><div class="marks" id="marks"></div></div>
+  </div>
+</div></section>
+
+<section id="cave"><div class="w">
+  <div class="sh"><h2 data-en="The cellar">La cave</h2><p data-en="Reds that can stand up to the fire. By the glass or by the bottle.">Des rouges qui tiennent tête au feu. Au verre ou à la bouteille.</p></div>
+  <div class="wine">
+    <div><b>Graves</b><span data-en="Bordeaux · supple and smoky">Bordeaux · souple et fumé</span><i data-en="€8 / glass">8 € le verre</i></div>
+    <div><b>Madiran</b><span data-en="South-West · powerful, tannic">Sud-Ouest · puissant, tannique</span><i data-en="€9 / glass">9 € le verre</i></div>
+    <div><b>Côtes-du-Rhône</b><span data-en="Rhône · spicy, generous">Rhône · épicé, généreux</span><i data-en="€7 / glass">7 € le verre</i></div>
+  </div>
+</div></section>
+
+<section class="end" id="resa"><div class="w">
+  <span class="k" data-en="Tue – Sat · from 7 pm">Mar – sam · dès 19 h</span>
+  <h2 data-en="Table's on fire.">La table<br>est chaude.</h2>
+  <a class="btn" href="#resa" data-en="Book a table">Réserver une table</a>
+  <p style="color:var(--dim);margin-top:22px" data-en="22 Example Quay, Bordeaux">22 quai de l'Exemple, Bordeaux</p>
+</div></section>
+<footer><div class="w"><span>© <span data-nom>La Braise</span></span><span data-en="Legal notice · Privacy">Mentions légales · Confidentialité</span></div></footer>
+
+<script>
+(function(){
+  var EN=false;
+  var CUTS=[
+    {k:['Persillée','Marbled'],n:['Entrecôte','Rib-eye'],d:['Généreuse et fondante, son gras fond sur la braise.','Generous and tender, its fat melts over the embers.'],o:['Aubrac, France','Aubrac, France'],m:['30 jours','30 days'],p:['29 €','€29'],
+     body:'M60 140 C70 70 170 40 260 52 C340 62 370 120 350 180 C330 240 240 262 150 250 C80 240 52 200 60 140Z',fat:'M120 92 C170 70 250 70 310 96',bone:''},
+    {k:['Tendre','Tender'],n:['Faux-filet','Sirloin'],d:['Une bande de gras sur le côté, une chair fine et serrée.','A strip of fat on the side, fine and tight-grained meat.'],o:['Limousin, France','Limousin, France'],m:['30 jours','30 days'],p:['27 €','€27'],
+     body:'M50 120 C50 80 110 64 200 64 C300 64 356 84 356 130 C356 190 300 226 200 226 C110 226 50 180 50 120Z',fat:'M64 100 C100 70 300 64 344 104',bone:''},
+    {k:['À partager','To share'],n:['Côte de bœuf','Prime rib'],d:['Pour deux, avec l\'os, découpée à table.','For two, on the bone, carved at the table.'],o:['Galice, Espagne','Galicia, Spain'],m:['45 jours','45 days'],p:['89 €','€89'],
+     body:'M70 150 C70 80 160 50 240 60 C320 70 350 130 330 190 C310 245 230 260 150 250 C95 242 70 205 70 150Z',fat:'M110 100 C160 74 250 74 300 100',bone:'M300 120 L392 60 Q400 54 396 70 L322 150 Z'},
+    {k:['Caractère','Bold'],n:['Bavette','Flank'],d:['Longue, aux fibres marquées, à manger saignante.','Long with marked fibres, best eaten rare.'],o:['Normandie, France','Normandy, France'],m:['21 jours','21 days'],p:['22 €','€22'],
+     body:'M30 150 C60 100 150 96 230 104 C310 112 370 124 376 150 C370 186 300 196 220 198 C140 200 60 196 30 150Z',fat:'',bone:''}
+  ];
+  var DONE=[['Bleu','Blue rare','46','Saisi dehors, presque cru dedans.','Seared outside, almost raw inside.','#B11E35'],['Saignant','Rare','52','Le cœur rouge et chaud. Notre conseil.','A warm red heart. Our pick.','#C2343B'],['À point','Medium','58','Rosé au centre, juteux partout.','Pink in the centre, juicy throughout.','#C95B5B'],['Cuit','Medium well','64','Juste une trace de rose.','Just a hint of pink.','#A56A55'],['Bien cuit','Well done','70','Cuit à cœur, sans rose.','Cooked through, no pink.','#7F5240']];
+  var ci=0;
+  function cut(i){ ci=i; var c=CUTS[i], L=EN?1:0; document.querySelectorAll('.tabs button').forEach(function(b){ b.setAttribute('aria-selected',+b.dataset.c===i?'true':'false'); });
+    ['k','n','d','o','m','p'].forEach(function(f){ document.getElementById('cut'+f.toUpperCase()).textContent=c[f][L]; });
+    document.getElementById('cutPath').setAttribute('d',c.body); document.getElementById('cutFat').setAttribute('d',c.fat); document.getElementById('cutBone').setAttribute('d',c.bone);
+    var s=document.getElementById('cutSvg'); s.style.transform='scale(.9) rotate(-4deg)'; requestAnimationFrame(function(){ requestAnimationFrame(function(){ s.style.transform='none'; }); }); }
+  document.querySelectorAll('.tabs button').forEach(function(b){ b.addEventListener('click',function(){ cut(+b.dataset.c); }); });
+  var dn=document.getElementById('dn');
+  function done(){ var d=DONE[+dn.value], L=EN?1:0; document.getElementById('temp').innerHTML=d[2]+'<small>°C</small>'; document.getElementById('doneN').textContent=d[L];
+    document.getElementById('doneD').textContent=d[3+L]; var core=document.getElementById('core'); core.setAttribute('fill',d[5]);
+    var sh=+dn.value*12; core.setAttribute('x',40+sh); core.setAttribute('y',70+sh*.5); core.setAttribute('width',440-sh*2); core.setAttribute('height',120-sh);
+    document.getElementById('marks').innerHTML=DONE.map(function(x,i){ return i===+dn.value?'<b>'+x[L]+'</b>':'<span>'+x[L]+'</span>'; }).join(''); }
+  dn.addEventListener('input',done);
+  function apply(){ var P=new URLSearchParams(location.hash.slice(1)); EN=P.get('l')==='en';
+    document.documentElement.lang=EN?'en':'fr';
+    document.querySelectorAll('[data-en]').forEach(function(e){ if(e.dataset.fr===undefined) e.dataset.fr=e.innerHTML; e.innerHTML=EN?e.dataset.en:e.dataset.fr; });
+    var n=P.get('n'); document.querySelectorAll('[data-nom]').forEach(function(e){ if(e.dataset.n0===undefined) e.dataset.n0=e.textContent; e.textContent=n||e.dataset.n0; });
+    var a=P.get('a'); if(a) document.querySelectorAll('[data-acc]').forEach(function(e){ e.textContent=a; });
+    var c=P.get('c'); if(c) document.documentElement.style.setProperty('--acc',c); else document.documentElement.style.removeProperty('--acc');
+    cut(ci); done(); }
+  window.addEventListener('hashchange',apply); apply();
+  document.addEventListener('click',function(e){ var l=e.target.closest('a[href^="#"]'); if(!l) return; var t=document.querySelector(l.getAttribute('href')); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); } });
+  var nav=document.getElementById('nav'); addEventListener('scroll',function(){ nav.classList.toggle('s',scrollY>30); },{passive:true});
+
+  // braises qui montent
+  var cv=document.getElementById('embers'), ctx=cv.getContext('2d'), P=[], reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, run=true;
+  function size(){ cv.width=cv.clientWidth*devicePixelRatio; cv.height=cv.clientHeight*devicePixelRatio; }
+  size(); addEventListener('resize',size);
+  for(var i=0;i<70;i++) P.push({x:Math.random(),y:Math.random(),v:.0006+Math.random()*.0016,r:.6+Math.random()*2.2,w:Math.random()*6.28,a:.3+Math.random()*.7});
+  new IntersectionObserver(function(e){ run=e[0].isIntersecting; if(run&&!reduce) requestAnimationFrame(draw); }).observe(cv);
+  function draw(){ var W=cv.width,H=cv.height; ctx.clearRect(0,0,W,H);
+    P.forEach(function(p){ p.y-=p.v; p.w+=.02; if(p.y<-.02){ p.y=1.02; p.x=Math.random(); }
+      var x=(p.x+Math.sin(p.w)*.01)*W, y=p.y*H, al=p.a*Math.min(1,p.y*1.6);
+      ctx.beginPath(); ctx.arc(x,y,p.r*devicePixelRatio,0,6.28); ctx.fillStyle='rgba(242,'+(120+Math.round(p.y*80))+',40,'+al+')'; ctx.shadowBlur=8*devicePixelRatio; ctx.shadowColor='rgba(232,120,40,.9)'; ctx.fill(); });
+    if(run&&!reduce) requestAnimationFrame(draw); }
+  draw();
+})();
+</script>
+<script>
+// photos et logo envoyés par le configurateur du Kit Site Web
+window.addEventListener('message',function(e){ var d=e.data; if(e.source!==window.parent||!d||d.kit!=='photos') return;
+  document.querySelectorAll('[data-slot]').forEach(function(el){ if(el.dataset.orig===undefined) el.dataset.orig=el.innerHTML;
+    var i=+el.dataset.slot, u=d.photos&&d.photos.length?d.photos[i%d.photos.length]:null;
+    el.innerHTML=u?'<img src="'+u+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit">':el.dataset.orig; el.classList.toggle('has-photo',!!u); });
+  document.querySelectorAll('[data-logo]').forEach(function(el){ if(el.dataset.orig===undefined) el.dataset.orig=el.innerHTML;
+    el.innerHTML=d.logo?'<img src="'+d.logo+'" alt="" style="height:36px;width:auto;display:block">':el.dataset.orig; });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Racine · restaurant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Manrope:wght@400;500;600&display=swap">
+<style>
+  :root{--bg:#0E1417;--bg2:#141C20;--ink:#EFE7DA;--dim:#9AA3A3;--line:#243036;--acc:#C98B5E;--d:"Fraunces",Georgia,serif;--b:"Manrope",system-ui,sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:400 16px/1.7 var(--b);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .w{max-width:1180px;margin:0 auto;padding:0 32px}
+  h1,h2,h3{font-family:var(--d);font-weight:300;letter-spacing:-.02em;line-height:1.02}
+  em{font-style:italic;color:var(--acc)}
+  .k{font:600 11.5px var(--b);letter-spacing:.24em;text-transform:uppercase;color:var(--acc)}
+  .btn{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--acc);color:var(--ink);padding:14px 26px;border-radius:2px;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;transition:background .3s ease,color .3s ease}
+  .btn:hover{background:var(--acc);color:var(--bg)}
+  .btn.f{background:var(--acc);color:var(--bg)}
+  nav{position:fixed;inset:0 0 auto;z-index:10;mix-blend-mode:normal;transition:background .4s ease}
+  nav.s{background:rgba(14,20,23,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .w{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:76px}
+  .logo{font:400 26px var(--d);letter-spacing:.02em;justify-self:center}
+  .nl{display:flex;gap:26px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  .nl a:hover{color:var(--ink)}
+  nav .btn{justify-self:end;padding:10px 18px;font-size:12px}
+
+  /* ---------- ouverture ---------- */
+  .open{height:240vh;position:relative}
+  .open .st{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;align-items:center}
+  .plate{position:absolute;right:-8vw;top:50%;margin-top:calc(min(82vh,760px) / -2);width:min(82vh,760px);aspect-ratio:1;will-change:transform}
+  .plate svg{width:100%;height:100%}
+  .veil{position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 30%,rgba(14,20,23,.55) 55%,transparent 80%)}
+  .hero{position:relative;display:grid;gap:22px;justify-items:start;padding:0 32px;max-width:1180px;width:100%;margin:0 auto}
+  .hero h1{font-size:clamp(56px,10vw,150px)}
+  .hero p{color:var(--dim);max-width:40ch}
+  @media (max-width:820px){.plate{right:-40vw;opacity:.55}.veil{background:linear-gradient(90deg,var(--bg) 20%,rgba(14,20,23,.6) 70%)}.hero{padding:0 22px}}
+  .down{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+  .down::after{content:"";display:block;width:1px;height:40px;background:linear-gradient(var(--acc),transparent);margin:10px auto 0;animation:drip 2s ease-in-out infinite}
+  @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ---------- manifeste ---------- */
+  .mani{padding:140px 0}
+  .mani p{font:300 clamp(30px,4.4vw,58px)/1.22 var(--d);max-width:20ch}
+  .mani p span{opacity:.16;transition:opacity .35s ease}
+  .mani p span.on{opacity:1}
+  .mani .sig{margin-top:34px;display:flex;gap:16px;align-items:center;color:var(--dim)}
+  .mani .sig::before{content:"";width:48px;height:1px;background:var(--acc)}
+
+  /* ---------- menu ---------- */
+  .menu{padding:120px 0;background:var(--bg2);border-block:1px solid var(--line)}
+  .mh{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:60px}
+  .mh h2{font-size:clamp(46px,6.4vw,90px)}
+  .mh p{color:var(--dim);max-width:40ch;justify-self:end}
+  .course{display:grid;grid-template-columns:90px 1fr auto;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--line);opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .course.in{opacity:1;transform:none}
+  .course:last-of-type{border-bottom:1px solid var(--line)}
+  .course .n{font:300 italic 34px var(--d);color:var(--acc)}
+  .course h3{font-size:30px}
+  .course p{color:var(--dim);font-size:15px;margin-top:4px}
+  .course small{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+  .tot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;align-items:center;margin-top:40px}
+  .tot b{font:300 44px var(--d)}
+  .tot span{color:var(--dim)}
+
+  /* ---------- lieu + réservation ---------- */
+  .place{padding:130px 0}
+  .pg{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .room{aspect-ratio:4/5;border-radius:2px;position:relative;overflow:hidden;background:linear-gradient(180deg,#1A262B,#0F171A)}
+  .room svg{position:absolute;inset:0;width:100%;height:100%}
+  .pg h2{font-size:clamp(42px,5.4vw,74px);margin:16px 0 22px}
+  .pg p{color:var(--dim);margin-bottom:28px;max-width:42ch}
+  .hrs{display:grid;grid-template-columns:auto 1fr;gap:10px 30px;margin:0 0 30px;font-size:15px}
+  .hrs span:nth-child(odd){color:var(--dim)}
+  .resa{border:1px solid var(--line);padding:30px;display:grid;gap:16px;background:var(--bg2)}
+  .resa .row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .resa .f{border:1px solid var(--line);padding:12px 14px;font-size:14px;color:var(--dim);display:flex;justify-content:space-between}
+  .resa .f b{color:var(--ink);font-weight:500}
+  footer{padding:60px 0 34px;border-top:1px solid var(--line);text-align:center;color:var(--dim);font-size:13px}
+  footer .logo{display:block;font-size:64px;color:var(--ink);margin-bottom:18px}
+  @media (max-width:820px){
+    nav .w{grid-template-columns:1fr auto}.nl{display:none}.logo{justify-self:start}
+    .w{padding:0 22px}.mh,.pg{grid-template-columns:1fr}.mh p{justify-self:start}
+    .course{grid-template-columns:52px 1fr;gap:14px}.course small{grid-column:2}
+    .resa .row{grid-template-columns:1fr}.mani{padding:100px 0}.menu,.place{padding:90px 0}
+  }
+  @media (prefers-reduced-motion:reduce){.course{opacity:1;transform:none;transition:none}.mani p span{opacity:1}.down::after{animation:none}}
+</style>
+</head>
+<body>
+<nav id="nav"><div class="w">
+  <div class="nl"><a href="#maison" data-en="The house">La maison</a><a href="#menu" data-en="Menu">Le menu</a></div>
+  <a class="logo" href="#top"><span data-logo><span data-nom>Racine</span></span></a>
+  <a class="btn" href="#resa" data-en="Book">Réserver</a>
+</div></nav>
+
+<div class="open" id="top"><div class="st">
+  <div class="plate" id="plate" aria-hidden="true" data-slot="0" style="border-radius:50%;overflow:hidden">
+    <svg viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="pl" cx=".5" cy=".45"><stop offset="0" stop-color="#F4EFE6"/><stop offset=".78" stop-color="#E6DDCF"/><stop offset="1" stop-color="#C9BEAD"/></radialGradient>
+        <radialGradient id="well" cx=".5" cy=".5"><stop offset="0" stop-color="#FBF8F2"/><stop offset="1" stop-color="#E9E1D3"/></radialGradient>
+        <linearGradient id="fish" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E9DA"/><stop offset=".6" stop-color="#EBCDB0"/><stop offset="1" stop-color="#C98B5E"/></linearGradient>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#pl)"/>
+      <circle cx="300" cy="300" r="200" fill="url(#well)"/>
+      <circle cx="300" cy="300" r="200" fill="none" stroke="#D9CFBF" stroke-width="2"/>
+      <path d="M190 360 Q260 250 410 300 Q330 300 260 370 Q220 400 190 360Z" fill="#2F4A3A" opacity=".85"/>
+      <path d="M200 350 Q270 270 395 302" stroke="#5E8A63" stroke-width="5" fill="none" stroke-linecap="round" opacity=".7"/>
+      <g transform="rotate(-18 300 300)"><rect x="220" y="262" width="170" height="74" rx="30" fill="url(#fish)"/><path d="M240 276 Q300 266 370 276 M236 300 Q300 290 376 300 M240 322 Q300 314 370 322" stroke="#D9A57C" stroke-width="3" fill="none" opacity=".7"/></g>
+      <g fill="#C98B5E"><circle cx="372" cy="232" r="9"/><circle cx="392" cy="252" r="6"/><circle cx="208" cy="250" r="7"/><circle cx="420" cy="350" r="8"/></g>
+      <g fill="#7FA36B"><path d="M250 226 q10 -22 26 -8 q-10 18 -26 8z"/><path d="M342 384 q16 -16 26 2 q-16 12 -26 -2z"/><path d="M402 284 q18 -10 22 8 q-18 6 -22 -8z"/><path d="M218 312 q-4 -20 14 -18 q2 18 -14 18z"/></g>
+      <g fill="#E8B4C0"><circle cx="330" cy="236" r="5"/><circle cx="338" cy="230" r="4"/><circle cx="324" cy="228" r="4"/></g>
+      <g fill="#EFE7DA"><circle cx="268" cy="384" r="3"/><circle cx="286" cy="392" r="2.4"/><circle cx="396" cy="320" r="2.6"/></g>
+    </svg>
+  </div>
+  <div class="veil"></div>
+  <div class="hero">
+    <span class="k" data-en="Restaurant · Bordeaux">Restaurant · Bordeaux</span>
+    <h1 data-acc data-en="The season,<br><em>at the table.</em>">La saison,<br><em>à table.</em></h1>
+    <p data-en="A short menu that changes with the market. Twenty-four seats, one open kitchen.">Une carte courte qui change avec le marché. Vingt-quatre couverts, une cuisine ouverte.</p>
+    <a class="btn f" href="#resa" data-en="Book a table">Réserver une table</a>
+  </div>
+  <span class="down" data-en="Scroll">Défiler</span>
+</div></div>
+
+<section class="mani" id="maison"><div class="w">
+  <span class="k" data-en="The house">La maison</span>
+  <p id="mani" style="margin-top:22px" data-en="We cook what the producers bring in the morning. Nothing more, nothing less: a few ingredients, a lot of care, and the time it takes.">Nous cuisinons ce que les producteurs apportent le matin. Rien de plus, rien de moins : peu d'ingrédients, beaucoup d'attention, et le temps qu'il faut.</p>
+  <div class="sig" data-en="The chef and the team">Le chef et l'équipe</div>
+</div></section>
+
+<section class="menu" id="menu"><div class="w">
+  <div class="mh"><div><span class="k" data-en="Tasting menu">Menu dégustation</span><h2 style="margin-top:16px" data-en="In six <em>courses</em>">En six <em>temps</em></h2></div><p data-en="The menu changes every month. Let us know about allergies when you book.">Le menu change chaque mois. Signalez vos allergies à la réservation.</p></div>
+  <div class="course"><span class="n">I</span><div><h3 data-en="Bite">Bouchée</h3><p data-en="Radish, smoked butter, sea salt">Radis, beurre fumé, sel de mer</p></div><small data-en="To start">Pour commencer</small></div>
+  <div class="course"><span class="n">II</span><div><h3 data-en="Garden">Jardin</h3><p data-en="Heirloom carrots, hazelnut, citrus">Carottes anciennes, noisette, agrumes</p></div><small data-en="Vegetable">Légume</small></div>
+  <div class="course"><span class="n">III</span><div><h3 data-en="Tide">Marée</h3><p data-en="Line-caught fish, beurre blanc, chard">Poisson de ligne, beurre blanc, blettes</p></div><small data-en="Sea">Mer</small></div>
+  <div class="course"><span class="n">IV</span><div><h3 data-en="Earth">Terre</h3><p data-en="Farm poultry, mushrooms, reduced jus">Volaille fermière, champignons, jus réduit</p></div><small data-en="Main">Plat</small></div>
+  <div class="course"><span class="n">V</span><div><h3 data-en="Pasture">Pâturage</h3><p data-en="Local cheese, honey, black pepper">Fromage du pays, miel, poivre noir</p></div><small data-en="Cheese">Fromage</small></div>
+  <div class="course"><span class="n">VI</span><div><h3 data-en="Orchard">Verger</h3><p data-en="Roasted pear, vanilla, buckwheat">Poire rôtie, vanille, sarrasin</p></div><small data-en="Dessert">Dessert</small></div>
+  <div class="tot"><div><b data-en="€78">78 €</b> <span data-en="per person · wine pairing €42">par personne · accord vins 42 €</span></div><a class="btn" href="#resa" data-en="Book this menu">Réserver ce menu</a></div>
+</div></section>
+
+<section class="place" id="resa"><div class="w pg">
+  <div class="room" aria-hidden="true" data-slot="1"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+    <defs><radialGradient id="lamp" cx=".5" cy=".3" r=".6"><stop offset="0" stop-color="#C98B5E" stop-opacity=".55"/><stop offset="1" stop-color="#C98B5E" stop-opacity="0"/></radialGradient></defs>
+    <rect width="400" height="500" fill="url(#lamp)"/>
+    <path d="M120 0 V110 M280 0 V110" stroke="#3A4A50" stroke-width="2"/>
+    <path d="M90 110 H150 L140 140 H100Z M250 110 H310 L300 140 H260Z" fill="#C98B5E"/>
+    <ellipse cx="120" cy="150" rx="40" ry="10" fill="#C98B5E" opacity=".25"/><ellipse cx="280" cy="150" rx="40" ry="10" fill="#C98B5E" opacity=".25"/>
+    <rect x="40" y="330" width="320" height="14" rx="3" fill="#2A363B"/><rect x="60" y="344" width="10" height="120" fill="#2A363B"/><rect x="330" y="344" width="10" height="120" fill="#2A363B"/>
+    <ellipse cx="140" cy="326" rx="34" ry="7" fill="#EFE7DA" opacity=".9"/><ellipse cx="260" cy="326" rx="34" ry="7" fill="#EFE7DA" opacity=".9"/>
+    <path d="M200 290 V326 M194 290 H206 L203 310 H197Z" stroke="#EFE7DA" stroke-width="2" fill="none" opacity=".7"/>
+  </svg></div>
+  <div>
+    <span class="k" data-en="Visit">Nous trouver</span>
+    <h2 data-en="Twenty-four seats,<br><em>one evening.</em>">Vingt-quatre couverts,<br><em>une soirée.</em></h2>
+    <div class="hrs"><span data-en="Wed – Sat">Mer – sam</span><span data-en="7:30 – 10 pm">19 h 30 – 22 h</span><span data-en="Fri – Sat">Ven – sam</span><span data-en="Lunch 12:15 – 1:45 pm">Déjeuner 12 h 15 – 13 h 45</span><span data-en="Sun – Tue">Dim – mar</span><span data-en="Closed">Fermé</span></div>
+    <div class="resa">
+      <div class="row"><div class="f"><span data-en="Date">Date</span><b data-en="Fri 22">Ven. 22</b></div><div class="f"><span data-en="Time">Heure</span><b>20:00</b></div><div class="f"><span data-en="Guests">Couverts</span><b>2</b></div></div>
+      <a class="btn f" href="#resa" style="justify-content:center" data-en="Check availability">Voir les disponibilités</a>
+      <small style="color:var(--dim)" data-en="14 Example Street, Bordeaux">14 rue de l'Exemple, Bordeaux</small>
+    </div>
+  </div>
+</div></section>
+
+<footer><span class="logo" data-nom>Racine</span><span data-en="Legal notice · Privacy">Mentions légales · Confidentialité</span></footer>
+
+<script>
+(function(){
+  var mani=document.getElementById('mani');
+  function split(){ var t=mani.textContent; mani.innerHTML=t.split(/\s+/).map(function(w){ return '<span>'+w.replace(/</g,'&lt;')+'</span>'; }).join(' '); }
+  function apply(){ var P=new URLSearchParams(location.hash.slice(1)), en=P.get('l')==='en';
+    document.documentElement.lang=en?'en':'fr';
+    document.querySelectorAll('[data-en]').forEach(function(e){ if(e.dataset.fr===undefined) e.dataset.fr=e.innerHTML; e.innerHTML=en?e.dataset.en:e.dataset.fr; });
+    var n=P.get('n'); document.querySelectorAll('[data-nom]').forEach(function(e){ if(e.dataset.n0===undefined) e.dataset.n0=e.textContent; e.textContent=n||e.dataset.n0; });
+    var a=P.get('a'); if(a) document.querySelectorAll('[data-acc]').forEach(function(e){ e.textContent=a; });
+    var c=P.get('c'); if(c) document.documentElement.style.setProperty('--acc',c); else document.documentElement.style.removeProperty('--acc');
+    split(); frame(); }
+  document.addEventListener('click',function(e){ var l=e.target.closest('a[href^="#"]'); if(!l) return; var t=document.querySelector(l.getAttribute('href')); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); } });
+  var nav=document.getElementById('nav'), plate=document.getElementById('plate'), open=document.getElementById('top'), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function frame(){
+    nav.classList.toggle('s',scrollY>40);
+    var r=open.getBoundingClientRect(), p=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
+    if(!reduce) plate.style.transform='translateX('+(-p*30)+'vw) rotate('+(p*70-10)+'deg) scale('+(0.92+p*0.35)+')'; plate.style.opacity=1-p*0.5;
+    var words=mani.querySelectorAll('span'), m=mani.getBoundingClientRect(), q=Math.min(1,Math.max(0,(innerHeight*0.85-m.top)/(m.height+innerHeight*0.35)));
+    var k=reduce?words.length:Math.round(q*words.length); words.forEach(function(w,i){ w.classList.toggle('on',i<k); });
+  }
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.2});
+  document.querySelectorAll('.course').forEach(function(c,i){ c.style.transitionDelay=(i%6)*60+'ms'; io.observe(c); });
+  var tick=false; addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(function(){ frame(); tick=false; }); } },{passive:true});
+  addEventListener('resize',frame); window.addEventListener('hashchange',apply); apply();
+})();
+</script>
+<script>
+// photos et logo envoyés par le configurateur du Kit Site Web
+window.addEventListener('message',function(e){ var d=e.data; if(e.source!==window.parent||!d||d.kit!=='photos') return;
+  document.querySelectorAll('[data-slot]').forEach(function(el){ if(el.dataset.orig===undefined) el.dataset.orig=el.innerHTML;
+    var i=+el.dataset.slot, u=d.photos&&d.photos.length?d.photos[i%d.photos.length]:null;
+    el.innerHTML=u?'<img src="'+u+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit">':el.dataset.orig; el.classList.toggle('has-photo',!!u); });
+  document.querySelectorAll('[data-logo]').forEach(function(el){ if(el.dataset.orig===undefined) el.dataset.orig=el.innerHTML;
+    el.innerHTML=d.logo?'<img src="'+d.logo+'" alt="" style="height:36px;width:auto;display:block">':el.dataset.orig; });
+});
+</script>
+</body>
+</html>

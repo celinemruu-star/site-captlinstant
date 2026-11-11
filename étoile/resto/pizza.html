@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Margò · pizzeria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+  :root{--bg:#F3E8D6;--bg2:#EADBC2;--ink:#2A1B14;--dim:#7A6656;--line:#DCC8AA;--acc:#C6402B;--basil:#3E7B3A;--d:"DM Serif Display",Georgia,serif;--b:"DM Sans",system-ui,sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--b);-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .6s ease,color .6s ease}
+  body.hot{background:#1C120D;color:#F6E9D8;--dim:#C2A88F;--line:#3A2A20}
+  a{color:inherit;text-decoration:none}
+  .w{max-width:1180px;margin:0 auto;padding:0 30px}
+  h1,h2,h3{font-family:var(--d);font-weight:400;line-height:1.02;letter-spacing:-.01em}
+  em{color:var(--acc)}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--acc);color:#FFF6EC;font-weight:700;padding:14px 26px;border-radius:99px}
+  .btn.o{background:none;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+  nav{position:fixed;inset:0 0 auto;z-index:10}
+  nav .w{display:flex;justify-content:space-between;align-items:center;height:76px}
+  .logo{font:400 30px var(--d);display:flex;align-items:center;gap:10px}
+  .logo i{width:14px;height:14px;border-radius:50%;background:var(--acc);box-shadow:8px -6px 0 -3px var(--basil)}
+  .nl{display:flex;gap:28px;font-weight:500;font-size:15px}
+  .pill{font-size:13px;font-weight:700;padding:9px 16px;border-radius:99px;background:var(--ink);color:var(--bg)}
+  body.hot .pill{background:#F6E9D8;color:#1C120D}
+
+  /* ---------- l'histoire ---------- */
+  .story{height:640vh;position:relative}
+  .stage{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:.95fr 1.05fr;align-items:center;gap:30px;max-width:1180px;margin:0 auto;padding:76px 30px 0}
+  .txt{position:relative;height:420px}
+  .tl{position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--line)}
+  .tl i{position:absolute;left:0;top:0;width:2px;height:0;background:var(--acc)}
+  .st{position:absolute;inset:0 0 0 30px;display:flex;flex-direction:column;justify-content:center;gap:14px;opacity:0;transform:translateX(-14px);transition:opacity .45s ease,transform .45s ease}
+  .st.on{opacity:1;transform:none}
+  .st .big{font:400 clamp(60px,7.5vw,110px)/1 var(--d);color:var(--acc)}
+  .st h1{font-size:clamp(46px,6vw,86px)}
+  .st h2{font-size:clamp(34px,4vw,56px)}
+  .st p{color:var(--dim);font-size:18px;max-width:34ch}
+  .st small{font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  .pz{position:relative;display:grid;place-items:center;height:min(80vh,620px)}
+  .pz svg{width:min(100%,560px);height:auto;overflow:visible}
+  #pizza{filter:drop-shadow(0 26px 30px rgba(60,30,10,.28))}
+  .oven{position:absolute;inset:-6% -2%;opacity:0;transition:opacity .6s ease}
+  .oven.on{opacity:1}
+  .peel{position:absolute;bottom:2%;width:62%;height:12px;border-radius:6px;background:#8B5A33;opacity:0;transition:opacity .4s ease}
+
+  section{padding:120px 0}
+  .mh{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:46px}
+  .mh h2{font-size:clamp(52px,7.4vw,108px)}
+  .mh p{max-width:36ch;color:var(--dim)}
+  .filters{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+  .filters button{all:unset;cursor:pointer;padding:9px 16px;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--line);font-weight:500;font-size:14px}
+  .filters button[aria-pressed=true]{background:var(--ink);color:var(--bg);box-shadow:none}
+  .filters button:focus-visible{outline:2px solid var(--acc)}
+  .list{display:grid;grid-template-columns:1fr 1fr;gap:0 48px}
+  .item{display:grid;grid-template-columns:64px 1fr auto;gap:18px;align-items:center;padding:20px 0;border-top:1px solid var(--line)}
+  .item[hidden]{display:none}
+  .item svg{width:64px;height:64px}
+  .item h3{font-size:28px}
+  .item p{color:var(--dim);font-size:14px}
+  .item b{font:400 28px var(--d);color:var(--acc)}
+  .info{background:var(--acc);color:#FFF4E8;border-radius:40px 40px 0 0}
+  .ig{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .ig h2{font-size:clamp(50px,7vw,100px)}
+  .hrs{display:grid;grid-template-columns:auto 1fr;gap:10px 28px;font-size:17px;margin:24px 0}
+  .hrs span:nth-child(odd){opacity:.8}
+  .info .btn{background:#FFF4E8;color:var(--acc)}
+  .info .photo{aspect-ratio:400/260;border-radius:24px;overflow:hidden}
+  .info .btn.o{background:none;color:#FFF4E8}
+  footer{background:var(--acc);color:#FFE3CF;padding:26px 0;font-size:13px}
+  footer .w{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid rgba(255,244,232,.25);padding-top:24px}
+  @media (max-width:860px){.list,.ig{grid-template-columns:1fr}}
+  @media (max-width:720px){
+    .nl{display:none}.w{padding:0 20px}
+    .stage{grid-template-columns:1fr;grid-template-rows:auto 1fr;gap:0;padding:84px 20px 0}
+    .txt{height:230px}.st .big{font-size:54px}.st h1{font-size:44px}.st h2{font-size:32px}.st p{font-size:15.5px}
+    .pz{height:auto}.pz svg{width:min(88vw,46vh)}section{padding:84px 0}
+  }
+  @media (prefers-reduced-motion:reduce){.st{transition:none}body{transition:none}}
+</style>
+</head>
+<body>
+<nav id="nav"><div class="w">
+  <a class="logo" href="#top"><span data-logo style="display:flex;align-items:center;gap:10px"><i aria-hidden="true"></i><span data-nom>Margò</span></span></a>
+  <div class="nl"><a href="#story" data-en="Our pizza">Notre pizza</a><a href="#carte" data-en="Menu">La carte</a><a href="#infos" data-en="Visit">Venir</a></div>
+  <a class="pill" href="#infos" data-en="Order">Commander</a>
+</div></nav>
+
+<div class="story" id="story">
+  <div class="stage" id="top">
+    <div class="txt">
+      <div class="tl"><i id="tl"></i></div>
+      <div class="st on" data-i="0"><small data-en="Neapolitan pizzeria · Bordeaux">Pizzeria napolitaine · Bordeaux</small><h1 data-acc data-en="A pizza that<br><em>takes its time.</em>">Une pizza qui<br><em>prend son temps.</em></h1><p data-en="Scroll down and watch it being made, step by step.">Fais défiler et regarde-la naître, étape par étape.</p></div>
+      <div class="st" data-i="1"><span class="big">48 h</span><h2 data-en="of slow rising">de pousse lente</h2><p data-en="Flour, water, salt, a little yeast. Then we wait.">Farine, eau, sel, un peu de levure. Puis on attend.</p></div>
+      <div class="st" data-i="2"><span class="big" data-en="Tomato">Tomate</span><h2 data-en="crushed by hand">écrasée à la main</h2><p data-en="Sun-ripened tomatoes, a pinch of salt, nothing else.">Des tomates mûries au soleil, une pincée de sel, rien d'autre.</p></div>
+      <div class="st" data-i="3"><span class="big">Mozza</span><h2 data-en="torn, never grated">déchirée, jamais râpée</h2><p data-en="Fresh fior di latte, added just before the oven.">Fior di latte frais, posée juste avant le four.</p></div>
+      <div class="st" data-i="4"><span class="big" data-en="Basil">Basilic</span><h2 data-en="and a drizzle of oil">et un filet d'huile</h2><p data-en="Picked in the morning, laid on at the last second.">Cueilli le matin, posé à la dernière seconde.</p></div>
+      <div class="st" data-i="5"><span class="big">90 s</span><h2 data-en="at 450 °C">à 450 °C</h2><p data-en="The crust puffs up and spots with char. That's when it's ready.">La croûte gonfle et se tache de noir. C'est là qu'elle est prête.</p><div><a class="btn" href="#carte" data-en="See the menu">Voir la carte</a></div></div>
+    </div>
+    <div class="pz">
+      <svg class="oven" id="oven" viewBox="0 0 600 600" aria-hidden="true">
+        <defs><radialGradient id="fire" cx=".5" cy=".75" r=".6"><stop offset="0" stop-color="#F5A142" stop-opacity=".95"/><stop offset=".5" stop-color="#C6402B" stop-opacity=".55"/><stop offset="1" stop-color="#1C120D" stop-opacity="0"/></radialGradient></defs>
+        <path d="M40 600 V300 A260 260 0 0 1 560 300 V600Z" fill="#2E1E16"/>
+        <path d="M70 600 V310 A230 230 0 0 1 530 310 V600Z" fill="url(#fire)"/>
+        <g fill="none" stroke="#4A3226" stroke-width="3"><path d="M40 300 A260 260 0 0 1 560 300"/><path d="M110 120 l30 30 M180 70 l18 38 M300 44 v40 M420 70 l-18 38 M490 120 l-30 30"/></g>
+      </svg>
+      <svg viewBox="0 0 600 600" id="pizza" aria-label="Une pizza qui se prépare">
+        <defs>
+          <radialGradient id="dough" cx=".45" cy=".4"><stop offset="0" stop-color="#F6E3C0"/><stop offset=".8" stop-color="#EBCB98"/><stop offset="1" stop-color="#D9AE6E"/></radialGradient>
+          <radialGradient id="crust" cx=".5" cy=".5"><stop offset=".82" stop-color="#E7BE7C"/><stop offset=".93" stop-color="#C98A45"/><stop offset="1" stop-color="#A9672E"/></radialGradient>
+          <radialGradient id="sauce" cx=".45" cy=".4"><stop offset="0" stop-color="#E2513A"/><stop offset="1" stop-color="#B5321F"/></radialGradient>
+          <clipPath id="sclip"><path id="sblob" d=""/></clipPath>
+        </defs>
+        <g id="base"><circle cx="300" cy="300" r="250" fill="url(#crust)" id="crustC"/><circle cx="300" cy="300" r="212" fill="url(#dough)"/>
+          <g fill="#F9EDD5" opacity=".9" id="bubbles"><circle cx="220" cy="230" r="9"/><circle cx="380" cy="260" r="6"/><circle cx="300" cy="380" r="8"/><circle cx="410" cy="370" r="5"/><circle cx="190" cy="350" r="6"/></g></g>
+        <g clip-path="url(#sclip)"><circle cx="300" cy="300" r="206" fill="url(#sauce)"/><g fill="#9E2A18" opacity=".45"><circle cx="250" cy="250" r="14"/><circle cx="360" cy="330" r="18"/><circle cx="260" cy="380" r="10"/></g></g>
+        <g id="mozza" fill="#FFF9EE" stroke="#F1E2C6" stroke-width="2">
+          <path d="M210 210 q30 -18 48 8 q10 30 -22 38 q-34 2 -26 -46z"/><path d="M340 190 q34 -6 40 22 q0 30 -34 28 q-26 -10 -6 -50z"/><path d="M380 320 q30 -8 36 22 q-4 30 -36 22 q-20 -18 0 -44z"/><path d="M250 340 q36 -10 42 20 q-2 30 -38 26 q-22 -16 -4 -46z"/><path d="M300 260 q22 -4 26 16 q-2 20 -24 18 q-16 -12 -2 -34z"/><path d="M180 290 q22 -6 26 14 q-2 22 -24 18 q-14 -12 -2 -32z"/><path d="M330 400 q24 -6 28 16 q-2 22 -26 18 q-16 -14 -2 -34z"/>
+        </g>
+        <g id="basil" fill="#3E7B3A">
+          <g transform="translate(240 250) rotate(-30)"><path d="M0 0 q22 -26 48 0 q-26 24 -48 0z"/><path d="M4 0 H44" stroke="#2C5A29" stroke-width="2"/></g>
+          <g transform="translate(350 280) rotate(40)"><path d="M0 0 q22 -26 48 0 q-26 24 -48 0z"/><path d="M4 0 H44" stroke="#2C5A29" stroke-width="2"/></g>
+          <g transform="translate(290 380) rotate(-70)"><path d="M0 0 q20 -22 42 0 q-22 20 -42 0z"/></g>
+          <g transform="translate(200 330) rotate(15)"><path d="M0 0 q18 -20 38 0 q-20 18 -38 0z"/></g>
+        </g>
+        <g id="oil" fill="none" stroke="#E8C24A" stroke-width="3" stroke-linecap="round" opacity=".8"><path d="M190 260 q80 -60 200 -10 q30 60 -40 120"/></g>
+        <g id="char" fill="#3A2216" opacity="0">
+          <circle cx="300" cy="62" r="7"/><circle cx="410" cy="92" r="5"/><circle cx="500" cy="200" r="8"/><circle cx="535" cy="320" r="5"/><circle cx="480" cy="460" r="7"/><circle cx="370" cy="535" r="6"/><circle cx="230" cy="530" r="8"/><circle cx="110" cy="440" r="5"/><circle cx="70" cy="300" r="7"/><circle cx="110" cy="160" r="6"/><circle cx="200" cy="80" r="5"/><circle cx="455" cy="140" r="4"/><circle cx="150" cy="500" r="4"/>
+        </g>
+      </svg>
+      <div class="peel" id="peel" aria-hidden="true"></div>
+    </div>
+  </div>
+</div>
+
+<section id="carte"><div class="w">
+  <div class="mh"><h2 data-en="The <em>menu</em>">La <em>carte</em></h2><p data-en="Eight pizzas, one dough. Gluten-free base on request.">Huit pizzas, une seule pâte. Base sans gluten sur demande.</p></div>
+  <div class="filters" role="group" aria-label="Filtrer"><button type="button" aria-pressed="true" data-f="all" data-en="All">Toutes</button><button type="button" aria-pressed="false" data-f="r" data-en="Tomato base">Base tomate</button><button type="button" aria-pressed="false" data-f="b" data-en="White base">Base crème</button><button type="button" aria-pressed="false" data-f="v" data-en="Veggie">Végé</button></div>
+  <div class="list" id="list"></div>
+</div></section>
+
+<section class="info" id="infos"><div class="w ig">
+  <div><h2 data-en="Hot in<br>15 minutes.">Chaude en<br>15 minutes.</h2>
+    <div class="hrs"><span data-en="Tue – Sun">Mar – dim</span><span data-en="12 – 2:30 pm · 6:30 – 11 pm">12 h – 14 h 30 · 18 h 30 – 23 h</span><span data-en="Monday">Lundi</span><span data-en="Closed">Fermé</span></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="#infos" data-en="Order to take away">Commander à emporter</a><a class="btn o" href="#infos" data-en="Book a table">Réserver une table</a></div></div>
+  <div><div data-slot="0" class="photo" aria-hidden="true"><svg viewBox="0 0 400 260" style="width:100%;height:100%"><rect width="400" height="260" fill="#B5321F"/><circle cx="200" cy="150" r="120" fill="#D9AE6E"/><circle cx="200" cy="150" r="100" fill="#C6402B"/><g fill="#FFF9EE"><circle cx="170" cy="120" r="14"/><circle cx="235" cy="140" r="16"/><circle cx="190" cy="190" r="13"/></g></svg></div><p style="font:400 30px/1.3 var(--d);margin-top:18px" data-en="5 Example Square, Bordeaux">5 place de l'Exemple, Bordeaux</p><p style="opacity:.8;margin-top:10px" data-en="Terrace in summer, wood oven all year round.">Terrasse l'été, four à bois toute l'année.</p></div>
+</div></section>
+<footer><div class="w"><span>© <span data-nom>Margò</span></span><span data-en="Legal notice · Privacy">Mentions légales · Confidentialité</span></div></footer>
+
+<script>
+(function(){
+  var EN=false;
+  var MENU=[['Margherita','Margherita','r v','Tomate, fior di latte, basilic','Tomato, fior di latte, basil','11'],['Diavola','Diavola','r','Tomate, mozza, salami piquant','Tomato, mozzarella, spicy salami','14'],['Ortolana','Ortolana','r v','Tomate, légumes grillés, burrata','Tomato, grilled vegetables, burrata','15'],['Regina','Regina','r','Tomate, jambon, champignons','Tomato, ham, mushrooms','13'],
+            ['Bianca','Bianca','b v','Crème, mozza, roquette, citron','Cream, mozzarella, rocket, lemon','13'],['Tartufo','Tartufo','b v','Crème de truffe, champignons','Truffle cream, mushrooms','18'],['Salsiccia','Salsiccia','b','Crème, saucisse, oignons doux','Cream, sausage, sweet onions','15'],['Del giorno','Of the day','r','Selon le marché et l\'humeur du chef','Depending on the market and the chef\'s mood','16']];
+  function ico(t){ return '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#D9AE6E"/><circle cx="32" cy="32" r="25" fill="'+(t.indexOf('b')>=0?'#F7EEDD':'#C6402B')+'"/><circle cx="24" cy="26" r="5" fill="#FFF9EE"/><circle cx="40" cy="36" r="5" fill="#FFF9EE"/><path d="M36 20 q6 -6 12 0 q-6 6 -12 0z" fill="#3E7B3A"/></svg>'; }
+  var filt='all';
+  function list(){ var L=EN?1:0; document.getElementById('list').innerHTML=MENU.map(function(m){ return '<div class="item"'+(filt!=='all'&&m[2].indexOf(filt)<0?' hidden':'')+'>'+ico(m[2])+'<div><h3>'+m[L]+'</h3><p>'+m[3+L]+'</p></div><b>'+(EN?'€'+m[5]:m[5]+' €')+'</b></div>'; }).join(''); }
+  document.querySelectorAll('.filters button').forEach(function(b){ b.addEventListener('click',function(){ filt=b.dataset.f; document.querySelectorAll('.filters button').forEach(function(x){ x.setAttribute('aria-pressed',x===b?'true':'false'); }); list(); }); });
+  function apply(){ var P=new URLSearchParams(location.hash.slice(1)); EN=P.get('l')==='en';
+    document.documentElement.lang=EN?'en':'fr';
+    document.querySelectorAll('[data-en]').forEach(function(e){ if(e.dataset.fr===undefined) e.dataset.fr=e.innerHTML; e.innerHTML=EN?e.dataset.en:e.dataset.fr; });
+    var n=P.get('n'); document.querySelectorAll('[data-nom]').forEach(function(e){ if(e.dataset.n0===undefined) e.dataset.n0=e.textContent; e.textContent=n||e.dataset.n0; });
+    var a=P.get('a'); if(a) document.querySelectorAll('[data-acc]').forEach(function(e){ e.textContent=a; });
+    var c=P.get('c'); if(c) document.documentElement.style.setProperty('--acc',c); else document.documentElement.style.removeProperty('--acc');
+    list(); }
+  window.addEventListener('hashchange',apply); apply();
+  document.addEventListener('click',function(e){ var l=e.target.closest('a[href^="#"]'); if(!l) return; var t=document.querySelector(l.getAttribute('href')); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); } });
+
+  // la pizza se prépare au défilement
+  var story=document.getElementById('story'), sts=[].slice.call(document.querySelectorAll('.st')), tl=document.getElementById('tl'),
+      blob=document.getElementById('sblob'), moz=document.querySelectorAll('#mozza path'), bas=document.querySelectorAll('#basil > g'), oil=document.getElementById('oil'),
+      chr=document.getElementById('char'), oven=document.getElementById('oven'), pz=document.getElementById('pizza'), peel=document.getElementById('peel'), bub=document.getElementById('bubbles'),
+      reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, last=-1;
+  function cl(x){ return Math.min(1,Math.max(0,x)); }
+  function win(p,a,b){ return cl((p-a)/(b-a)); }
+  function blobPath(r){ var pts=[],n=18; for(var i=0;i<n;i++){ var t=i/n*6.283, rr=r*(1+0.05*Math.sin(i*2.7)+0.03*Math.cos(i*5.1)); pts.push([300+Math.cos(t)*rr,300+Math.sin(t)*rr]); }
+    var d='M'+pts[0][0].toFixed(1)+' '+pts[0][1].toFixed(1); for(var j=1;j<=n;j++){ var a=pts[j%n], b=pts[(j-1)%n], mx=(a[0]+b[0])/2, my=(a[1]+b[1])/2; d+=' Q'+b[0].toFixed(1)+' '+b[1].toFixed(1)+' '+mx.toFixed(1)+' '+my.toFixed(1); } return d+'Z'; }
+  function frame(){
+    var r=story.getBoundingClientRect(), p=reduce?1:cl(-r.top/(r.height-innerHeight));
+    var s1=win(p,.06,.2), s2=win(p,.22,.38), s3=win(p,.4,.55), s4=win(p,.57,.7), s5=win(p,.74,.9);
+    bub.style.opacity=1-s2;
+    pz.style.transform='scale('+(0.86+0.14*s1)+') rotate('+(p*40)+'deg)';
+    blob.setAttribute('d',s2>0?blobPath(30+176*s2):'M0 0Z');
+    moz.forEach(function(m,i){ var k=win(s3,i/moz.length*.6,i/moz.length*.6+.4); m.style.opacity=k; m.style.transform='translateY('+((1-k)*-40)+'px)'; m.style.transformBox='fill-box'; m.style.transformOrigin='center'; });
+    bas.forEach(function(g,i){ var k=win(s4,i*.18,i*.18+.4); g.style.opacity=k; });
+    oil.style.strokeDasharray='600'; oil.style.strokeDashoffset=600-600*win(s4,.5,1);
+    chr.style.opacity=s5; oven.classList.toggle('on',s5>0.05); document.body.classList.toggle('hot',s5>0.3); peel.style.opacity=s5;
+    tl.style.height=(p*100)+'%';
+    var i=p<.06?0:p<.22?1:p<.4?2:p<.57?3:p<.74?4:5; if(reduce) i=5;
+    if(i!==last){ sts.forEach(function(s){ s.classList.toggle('on',+s.dataset.i===i); }); last=i; }
+  }
+  var tick=false; addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(function(){ frame(); tick=false; }); } },{passive:true});
+  addEventListener('resize',frame); frame();
+})();
+</script>
+<script>
+// photos et logo envoyés par le configurateur du Kit Site Web
+window.addEventListener('message',function(e){ var d=e.data; if(e.source!==window.parent||!d||d.kit!=='photos') return;
+  document.querySelectorAll('[data-slot]').forEach(function(el){ if(el.dataset.orig===undefined) el.dataset.orig=el.innerHTML;
+    var i=+el.dataset.slot, u=d.photos&&d.photos.length?d.photos[i%d.photos.length]:null;
+    el.innerHTML=u?'<img src="'+u+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit">':el.dataset.orig; el.classList.toggle('has-photo',!!u); });
+  document.querySelectorAll('[data-logo]').forEach(function(el){ if(el.dataset.orig===undefined) el.dataset.orig=el.innerHTML;
+    el.innerHTML=d.logo?'<img src="'+d.logo+'" alt="" style="height:36px;width:auto;display:block">':el.dataset.orig; });
+});
+</script>
+</body>
+</html>
